@@ -13,46 +13,65 @@ public class SimularValoresController {
 	@GetMapping
 	public ResponseEntity<String> simularValores(@RequestParam(name="codigoProduto") int codigoProduto,
 			@RequestParam(name="codTipoPagamento") int codTipoPagamento) {
-		/*
-		 * Exemplo de chamada:
-		 * https://localhost:8080/simular?codigoProduto=1&codTipoPagamento=2
-		 * 
-		 * Elabore um algoritmo para calcular o valor final de um produto com base em seu valor REAL
-		 *  e a condição de pagamento.
-		 *  
-		 *  A escolha do produto e sua condição de pagamento da-se através de seus códigos, faça um 
-		 *  algoritmo também para realizar a escolha de cada um dos itens a partir de seus códigos.
-		 *  
-		 *  Tabela de produto
-		 *  
-		 *  CodigoProduto	descrição do Produto		Valor do Produto
-		 * 	1				Camisa						70.00
-		 * 	2				Shorts						57.50
-		 * 	3				Meia						9.99
-		 * 	4				Toca						35.00
-		 * 	5				Luvas						19.50
-		 * 
-		 * -----------------------------------------------------------------
-		 * 
-		 * Tabela de condição de pagamento
-		 * 
-		 * 	CodTipoPagamento		descrição da condição de pagamento
-		 * 	1						A vista no dinheiro com 10% de desconto
-		 * 	2						A vista no cartão de crédito  com 5% de desconto
-		 * 	3						Em duas parcelas sem nenhum desconto
-		 * 	4						Em três vezes com 10% de juros
-		 * 
-		 * OBS: Considerar sempre os descontos ou juros do valor do produto
-		 * A resposta do exercicio deve seguir o seguinte formato:
-		 * 
-		 * <descrição do produto> sendo pago <descrição da condição de pagamento> custará <valor final do produto> reais
-		 * 
-		 * Ex.: Camisa sendo pago A vista no dinheiro com 10% de desconto custará 63.0 reais
-		 * 
-		 */
 		
-		
-		return ResponseEntity.ok("Hello world !");
+				//Definição das variáveis que serão utilizadas no final
+				String descProduto = "";
+				String descCondicaoPagto = "";
+
+				//Definição da variavel para guardar o valor do produto
+				double valorProduto = 0;
+				
+				//Cadeia de if para identificar o produto pelo codigo
+				if (codigoProduto == 1) {
+					//atribui a desc do produto
+					descProduto = "Camisa";
+					//atribui valor do produto
+					valorProduto = 70.00;
+				} else if (codigoProduto == 2) {
+					descProduto = "Shorts";
+					valorProduto = 57.50;
+				} else if (codigoProduto == 3) {
+					descProduto = "Meia";
+					valorProduto = 9.99;
+				}  else if (codigoProduto == 4) {
+					descProduto = "Toca";
+					valorProduto = 35.00;
+				} else {
+					descProduto = "Luvas";
+					valorProduto = 19.50;
+				}
+
+				//Definição da variavel que sera guardado o valor final
+				double valorFinal = 0;
+
+				//Cadeia de if para identificar o tipo de pagamento
+				if (codTipoPagamento == 1) {
+					//Atribui a descrição do tipo de pagamento
+					descCondicaoPagto = "A vista no dinheiro com 10% de desconto";
+
+					//Faz o calculo de subtrair 10% do valor do produto para chegar ao valor final
+					valorFinal = valorProduto - (10 * valorProduto / 100);
+				} else if (codTipoPagamento == 2) {
+					//Atribui a descrição do tipo de pagamento
+					descCondicaoPagto = "A vista no cartão de crédito com 5% de desconto";
+
+					//Faz o calculo de subtrair 5% do valor do produto para chegar ao valor final
+					valorFinal = valorProduto - (5 * valorProduto / 100);
+				} else if (codTipoPagamento == 3) {
+					//Atribui a descrição do tipo de pagamento
+					descCondicaoPagto = "Em duas parcelas sem nenhum desconto";
+
+					//Atribui o valor do produto a variavel valor Final
+					valorFinal = valorProduto;
+				} else {
+					//Atribui a descrição do tipo de pagamento
+					descCondicaoPagto = "Em três vezes com 10% de juros";
+
+					//Faz o calculo de somar 10% do valor do produto para chegar ao valor final
+					valorFinal = valorProduto + (10 * valorProduto / 100);
+				}
+
+				return ResponseEntity.ok(descProduto + " sendo pago " + descCondicaoPagto + " custará " + valorFinal +  " reais");
 	}
 	
 }
